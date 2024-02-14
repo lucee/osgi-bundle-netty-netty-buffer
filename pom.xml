@@ -1,0 +1,172 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.lucee</groupId>
+  <artifactId>netty-netty-buffer</artifactId>
+  <version>4.1.100.Final</version>
+  <name>netty-netty-buffer</name>
+  <packaging>bundle</packaging>
+
+  <description>OSGi Version of netty-netty-buffer</description>
+  <url>http://maven.lucee.org/netty-netty-buffer/</url>
+
+  <!-- same license as the original jar -->
+  <licenses>
+<license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
+
+  <developers>
+<developer>
+      <id>micstriit</id>
+      <name>Michael Offner</name>
+      <email>michael@lucee.org</email>
+      <organization>Lucee Association Switzerland</organization>
+      <organizationUrl>http://lucee.org</organizationUrl>
+      <roles>
+        <role>Project-Administrator</role>
+        <role>Developer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
+  </developers>
+
+  <build>
+    <plugins>
+      <plugin>
+      <groupId>org.sonatype.plugins</groupId>
+      <artifactId>nexus-staging-maven-plugin</artifactId>
+      <version>1.6.3</version>
+      <extensions>true</extensions>
+      <configuration>
+        <serverId>ossrh</serverId>
+        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+        <autoReleaseAfterClose>true</autoReleaseAfterClose>
+      </configuration>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-gpg-plugin</artifactId>
+      <version>1.5</version>
+      <executions>
+        <execution>
+          <id>sign-artifacts</id>
+          <phase>verify</phase>
+          <goals>
+            <goal>sign</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-release-plugin</artifactId>
+      <version>2.5</version>
+      <configuration>
+        <autoVersionSubmodules>true</autoVersionSubmodules>
+        <useReleaseProfile>false</useReleaseProfile>
+        <releaseProfiles>release</releaseProfiles>
+        <goals>deploy</goals>
+      </configuration>
+    </plugin>
+
+    <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-dependency-plugin</artifactId>
+         <version>2.10</version>
+         <executions>
+           <execution>
+             <id>unpack</id>
+             <phase>validate</phase>
+             <goals>
+               <goal>unpack</goal>
+             </goals>
+             <configuration>
+               <artifactItems>
+                 <artifactItem>
+                   <groupId>io.netty</groupId>
+                    <artifactId>netty-buffer</artifactId>
+                    <version>4.1.100.Final</version>
+                    <!-- <classifier></classifier> -->
+                   <type>jar</type>
+                   <overWrite>false</overWrite>
+                   <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                 </artifactItem>
+               </artifactItems>
+               <overWriteReleases>true</overWriteReleases>
+               <overWriteSnapshots>true</overWriteSnapshots>
+             </configuration>
+           </execution>
+         </executions>
+       </plugin>
+
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>5.1.2</version>
+        <configuration>
+          <unpackBundle>true</unpackBundle>
+          <instructions>
+            <Bundle-Name>org.lucee.netty-buffer</Bundle-Name>
+            <Bundle-SymbolicName>org.lucee.netty-buffer</Bundle-SymbolicName>
+            <Bundle-Description>OSGI version of jar ${project.name}</Bundle-Description>
+            <Export-Package>*,META-INF.services.*</Export-Package>
+            <!-- <Require-Bundle></Require-Bundle> -->
+            <!-- <Require-Bundle-Fragment></Require-Bundle-Fragment> -->
+            <Import-Package>!javax.security.cert,*</Import-Package>
+            <DynamicImport-Package>javax.security.cert</DynamicImport-Package>
+            <!-- <Fragment-Host></Fragment-Host> -->
+            <Bundle-Vendor>The Netty Project</Bundle-Vendor>
+						<Implementation-URL>https&#x3a;&#x2f;&#x2f;netty.io&#x2f;netty-buffer&#x2f;</Implementation-URL>
+						<Bundle-DocURL>https&#x3a;&#x2f;&#x2f;netty.io&#x2f;</Bundle-DocURL>
+						<Require-Capability>osgi.ee&#x3b;filter&#x3a;&#x3d;&#x22;&#x28;&#x26;&#x28;osgi.ee&#x3d;JavaSE&#x29;&#x28;version&#x3d;1.6&#x29;&#x29;&#x22;</Require-Capability>
+						<Built-By>norman</Built-By>
+						<Manifest-Version>1.0</Manifest-Version>
+						<Bundle-License>https&#x3a;&#x2f;&#x2f;www.apache.org&#x2f;licenses&#x2f;LICENSE-2.0</Bundle-License>
+						<Build-Jdk-Spec>1.8</Build-Jdk-Spec>
+						<Implementation-Vendor-Id>io.netty</Implementation-Vendor-Id>
+						<Implementation-Vendor>The Netty Project</Implementation-Vendor>
+						<Bnd-LastModified>1696948188327</Bnd-LastModified>
+						<Build-Jdk>1.8.0_382</Build-Jdk>
+						<Tool>Bnd-6.3.1.202206071316</Tool>
+						<Implementation-Title>Netty&#x2f;Buffer</Implementation-Title>
+						<Bundle-Description>Netty is an asynchronous event-driven network application framework for    rapid development of maintainable high performance protocol servers and    clients.</Bundle-Description>
+						<Automatic-Module-Name>io.netty.buffer</Automatic-Module-Name>
+						<Implementation-Version>4.1.100.Final</Implementation-Version>
+						<Created-By>Apache Maven Bundle Plugin 5.1.8</Created-By>
+            <!-- Embed Dependency -->
+            <!-- <_noee></_noee> -->
+          </instructions>
+        </configuration>
+        <extensions>true</extensions>
+      </plugin>
+
+
+    </plugins>
+  </build>
+
+
+  <scm>
+    <url>https://github.com/lucee/osgi-bundle-netty-netty-buffer</url>
+    <connection>scm:git:git://github.com/lucee/osgi-bundle-netty-netty-buffer.git</connection>
+    <developerConnection>scm:git:git@github.com:lucee/osgi-bundle-netty-netty-buffer.git</developerConnection>
+    <tag>netty-netty-buffer OSGi library</tag>
+  </scm>
+
+  <distributionManagement>
+    <repository>
+    <id>ossrh</id>
+    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+  </repository>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+</project>
